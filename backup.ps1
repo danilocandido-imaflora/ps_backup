@@ -33,6 +33,12 @@ $usuarios = foreach ($p in $perfis) {
     [PSCustomObject]@{ Nome = $nomePerfil; Caminho = $caminhoPerfil }
 }
 
+$usuarios = @($usuarios)
+if (-not $usuarios -or $usuarios.Count -eq 0) {
+    Write-Warning "`nNenhum usuário elegível para backup."
+    return
+}
+
 Write-Host "`nUsuários que terão backup executado:" -ForegroundColor Yellow
 $usuarios | Format-Table Nome, Caminho -AutoSize
 if (-not $usuarios -or $usuarios.Count -eq 0) { Write-Warning "`nNenhum usuário elegível para backup."; return }
